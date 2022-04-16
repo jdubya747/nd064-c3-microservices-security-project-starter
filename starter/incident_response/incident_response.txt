@@ -1,6 +1,11 @@
-1. Incident commander name:
-2. Executive Summary of what happened:
-3. Summary of what was affected:
-4. Summmry of the impact:
-5. Summary of the remediation steps:
-6. Summary of lessons learned:
+1. Incident commander name: John White
+
+2. Executive Summary of what happened: An intruder gained privileged access to our system. With that, they then installed crypto mining software in our Kubernetes cluster. There was no impact to our customers. There was a brief period of unauthorized computer resource utilization.
+
+3. Summary of what was affected: Grafana indicated a large spike in Falco security events indicating crypto mining. Inspection of current pods indicated that unknown pods were running. Inspecting the containers confirmed that their source was external with the intent of crypto mining.
+
+4. Summary of the impact: Impact was simply a spike in CPU utilization. We detected this early enough to prevent any resource constraint to the system at large. Net result was that we briefly lost CPU to an unauthorized user.
+
+5. Summary of the remediation steps: The situation was remediated by the forcibly deleting the unauthorized crypto mining pods.
+
+6. Summary of lessons learned: As a result of this event, we will institute controls over what images can be started. From our SDLC, we know the set of images needed in production. We will control that only that set can be started. A second measure will be to tighten our education and safeguards to mitigate unauthorized user from gaining access to privileged terminals.
