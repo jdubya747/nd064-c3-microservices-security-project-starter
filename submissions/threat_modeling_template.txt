@@ -1,0 +1,59 @@
+
+Docker Threat Modeling
+Given Docker's system components and the STRIDE framework, identify five potential threats that may arise.
+
+==========================================================================
+==========================================================================
+
+Docker Client
+Spoofing - traffic between Docker client to daemon or registry maybe intercepted by a malicious party. This security concern can be mitigated via Transport Layer Security (TLS)
+
+Elevation of privilege - The docker file should specify a user. If it does not, the default will be the root user which is a security concern
+
+
+Docker Host
+Tampering - Daemon configurations maybe altered by a compromised client leading to improper configurations.
+
+Repudiation - Malicious user may make changes to the daemon leading to misconfigurations.
+
+Denial of Service - If left unconstrained, memory for the running containers can be maliciously manipulated leading to loss of service.
+
+
+Docker Registry
+Spoofing - Authenticity of images is critical. Not authenticated the provider is a security concern.
+
+Tampering - Container images may have been altered by implanting malicious images.
+
+Elevation of privilege - Container image permissions maybe elevated using the --privilege flag. This could lead to potential exploits and thus is a security concern.
+
+==========================================================================
+==========================================================================
+
+Kubernetes Threat Modeling
+Given Kubernetes' system components and the STRIDE framework, identify five potential threats that may arise.
+
+Control Plane
+Spoofing - Calls to the API server could be spoofed with malicious intent. For this reason, anonymous and basic authentication should not be allowed and replaced instead with TLS.
+
+Tampering - Etcd is critical and essential configuration data. Unauthorized changes are a security threat. 
+
+Elevation of Privilege - Use of the privileged flag needs to be avoided. Elevation can be exploited with malicious intent.
+
+Data Plane
+Tampering - Kubelet configuration can be maliciously altered via kubelet.conf
+
+Denial of Service - Maliciously exploiting Kubelet to overrun kernel resources can lead to denial of service. 
+
+==========================================================================
+==========================================================================
+
+Docker-bench Run Results and Analysis
+From the failed findings, select and document 3 findings from the Docker-bench results that you want to harden based on the 5 attack surface areas you identified in Step 1. At least 1 of the 3 hardened findings should be different from the ones mentioned in the exercise (i.e. 5.10, 5.14, and 5.22).
+
+1) 1.2.3 Ensure auditing is configured for the docker daemon
+This is exposure of the above listed Repudiation threat in the Docker Host. That being that a malicious actor will make changes to the daemon. This auditing will expose that.
+2) 3.21  Ensure that /etc/sysconfig/docker file permissions are set to 644 or more restrictive
+This is a mitigation for the above listed Docker host Tampering threat.
+3) 4.5   Ensure Content trust for Docker is Enabled
+This will provide assurance for the above listed Spoofing and Tampering threats in the Docker Registry
+
