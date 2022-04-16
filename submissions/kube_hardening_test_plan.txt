@@ -1,0 +1,20 @@
+How will we test the changes? 
+We will leverage our staging environment to test all hardening. We will do this testing for each individual hardening item and will continue over iterations in line with our ci/cd philosophy.
+
+What is the environment?
+We have our production environment servicing our customers. We have created a staging environment which mirrors content with production.
+
+How will we ensure the changes don't negatively affect your cluster?
+We will monitor the results of applying the change in staging using the establish monitoring toolset that we have in production. This tools set will be part of the mirroring of production and that was done to create staging.
+
+Can the change be canary tested with some traffic directed to simulate load on the system?
+Since its currently not possible to divert production traffic to staging. We will create simulated load via load producing tools for use in staging.
+
+Does the environment mimic production? If not, how can we mimic production? 
+Our staging environment is a mirror of production
+
+Can the change be rolled out incrementally to a percentage of traffic?
+Currently, our production cannot support this. 
+
+Can the change be safely rolled back?
+Yes, rollback can be done. However, it will result in limited system downtime so it should be avoided.
